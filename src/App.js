@@ -1,25 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import {
+    RouterProvider,
+    Route,
+    createBrowserRouter,
+    createRoutesFromElements
+} from 'react-router-dom';
+
+import RootLayout from './pages/RootLayout';
+import HomePage, { loader as authLoader } from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import AuthContext from './context/AuthContext';
+
+import { useContext } from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    let router = createBrowserRouter(createRoutesFromElements(
+        <Route path='/' element={<RootLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path='/login' element={<LoginPage />} />
+        </Route>
+    ));
+    return (
+        <div className="App">
+            <RouterProvider router={router} />
+        </div>
+    );
 }
 
 export default App;
